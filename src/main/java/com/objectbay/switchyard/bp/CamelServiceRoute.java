@@ -8,12 +8,11 @@ public class CamelServiceRoute extends RouteBuilder {
 		from("switchyard://Router")
 		.log("Received message for 'Router' : ${body}")
 		.choice()
-			.when(simple("${body.stationType.toString} == 'TYPE1'"))
-				.log("get report -> CollectorService1")
-				.to("switchyard://CollectorService1")
-			.otherwise()
+			.when(simple("${body.stationType.toString} == 'DB'"))
 				.log("get report -> CollectorService2")
-				.to("switchyard://CollectorService2");
+				.to("switchyard://CollectorService2")
+			.otherwise()
+				.log("get report -> CollectorService1")
+				.to("switchyard://CollectorService1");
 		}
-
 }

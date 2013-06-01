@@ -1,19 +1,19 @@
 package com.objectbay.switchyard.bp.domain;
 
 public class ReportRequest {
-	StationType stationType;
+	RequestType stationType;
 	
 	public ReportRequest() { }
 	
-	public ReportRequest(StationType stationType) {
+	public ReportRequest(RequestType stationType) {
 			setStationType(stationType);
 	}
 
-	public void setStationType(StationType type) {
+	public void setStationType(RequestType type) {
 		this.stationType = type;
 	}
 
-	public StationType getStationType() {
+	public RequestType getStationType() {
 		return stationType;
 	}
 }

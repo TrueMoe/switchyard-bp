@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<switchyard xmlns="urn:switchyard-config:switchyard:1.0" xmlns:bean="urn:switchyard-component-bean:config:1.0" xmlns:camel="urn:switchyard-component-camel:config:1.0" xmlns:jpa="urn:switchyard-component-camel-jpa:config:1.0" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:soap="urn:switchyard-component-soap:config:1.0" name="switchyard-bp" targetNamespace="urn:com.example.switchyard:switchyard-bp:1.0">
+<switchyard xmlns="urn:switchyard-config:switchyard:1.0" xmlns:bean="urn:switchyard-component-bean:config:1.0" xmlns:camel="urn:switchyard-component-camel:config:1.0" xmlns:jpa="urn:switchyard-component-camel-jpa:config:1.0" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:soap="urn:switchyard-component-soap:config:1.0" xmlns:sql="urn:switchyard-component-camel-sql:config:1.0" name="switchyard-bp" targetNamespace="urn:com.example.switchyard:switchyard-bp:1.0">
   <sca:composite name="switchyard-bp" targetNamespace="urn:com.example.switchyard:switchyard-bp:1.0">
     <sca:component name="WebServiceBean">
       <bean:implementation.bean class="com.objectbay.switchyard.bp.WebServiceBean"/>
@@ -36,21 +36,17 @@
         <sca:interface.java interface="com.objectbay.switchyard.bp.CollectorService"/>
       </sca:service>
       <sca:reference name="GasStationService">
-        <sca:interface.java interface="com.objectbay.switchyard.bp.db.dao.GasStationService"/>
+        <sca:interface.java interface="com.objectbay.switchyard.bp.db.service.GasStationService"/>
       </sca:reference>
     </sca:component>
     <sca:reference name="GasStationService" multiplicity="0..1" promote="CollectorService2Bean/GasStationService">
-      <sca:interface.java interface="com.objectbay.switchyard.bp.db.dao.GasStationService"/>
-      <jpa:binding.jpa>
-        <jpa:contextMapper/>
-        <jpa:entityClassName>com.objectbay.switchyard.bp.db.domain.GasStation</jpa:entityClassName>
-        <jpa:persistenceUnit>jpaPersistenceUnit2</jpa:persistenceUnit>
-        <!-- <jpa:transactionManager>#jtaTransactionManager</jpa:transactionManager> -->
-        <jpa:transactionManager>#springPlatformTransactionManager</jpa:transactionManager>
-        <jpa:consume>
-          <jpa:consumer.namedQuery>GasStation</jpa:consumer.namedQuery>
-        </jpa:consume>
-      </jpa:binding.jpa>
+      <sca:interface.java interface="com.objectbay.switchyard.bp.db.service.GasStationService"/>
+      <sql:binding.sql>
+        <operationSelector operationName="getStations"/>
+        <sql:contextMapper/>
+        <sql:query>SELECT * FROM GasStation</sql:query>
+        <sql:dataSourceRef>java:jboss/datasources/ExampleDS</sql:dataSourceRef>
+      </sql:binding.sql>
     </sca:reference>
     <sca:service name="WebServicePortType" promote="WebServiceBean/WebService">
       <sca:interface.wsdl interface="WebService.wsdl#wsdl.porttype(WebServicePortType)"/>

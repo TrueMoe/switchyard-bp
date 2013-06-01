@@ -4,13 +4,25 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:com.example.switchyard:switchyard-bp:1.0" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="urn:com.example.switchyard:switchyard-bp:1.0">
   <xs:complexType name="reportRequest">
     <xs:sequence>
-      <xs:element minOccurs="0" name="stationType" type="tns:stationType"/>
+      <xs:element minOccurs="0" name="stationType" type="tns:requestType"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="stationType">
+  <xs:complexType name="reportResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="gasStations" nillable="true" type="tns:gasStation"/>
+      <xs:element minOccurs="0" name="stationType" type="tns:requestType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="gasStation">
+    <xs:sequence>
+      <xs:element name="id" type="xs:long"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="requestType">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="TYPE1"/>
-      <xs:enumeration value="TYPE2"/>
+      <xs:enumeration value="DB"/>
+      <xs:enumeration value="STATIC"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="getStationReport" type="tns:getStationReport"/>
@@ -22,7 +34,7 @@
   <xs:element name="getStationReportResponse" type="tns:getStationReportResponse"/>
   <xs:complexType name="getStationReportResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" name="reportResponse"/>
+      <xs:element minOccurs="0" name="reportResponse" type="tns:reportResponse"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>
