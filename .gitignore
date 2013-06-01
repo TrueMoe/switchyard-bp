@@ -1,0 +1,14 @@
+.project
+.classpath
+.settings/
+target/
+bin/
+.xml/
+components-file/bin/
+core/bin/
+.checkstyle
+*.iml
+*.ipr
+*.iws
+.DS_Store
+*.log

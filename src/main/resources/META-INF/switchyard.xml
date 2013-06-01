@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<switchyard xmlns="urn:switchyard-config:switchyard:1.0" xmlns:bean="urn:switchyard-component-bean:config:1.0" xmlns:camel="urn:switchyard-component-camel:config:1.0" xmlns:jpa="urn:switchyard-component-camel-jpa:config:1.0" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:soap="urn:switchyard-component-soap:config:1.0" name="switchyard-bp" targetNamespace="urn:com.example.switchyard:switchyard-bp:1.0">
+  <sca:composite name="switchyard-bp" targetNamespace="urn:com.example.switchyard:switchyard-bp:1.0">
+    <sca:component name="WebServiceBean">
+      <bean:implementation.bean class="com.objectbay.switchyard.bp.WebServiceBean"/>
+      <sca:service name="WebService">
+        <sca:interface.java interface="com.objectbay.switchyard.bp.WebService"/>
+      </sca:service>
+      <sca:reference name="Router">
+        <sca:interface.java interface="com.objectbay.switchyard.bp.Router"/>
+      </sca:reference>
+    </sca:component>
+    <sca:component name="CamelServiceRoute">
+      <camel:implementation.camel>
+        <camel:java class="com.objectbay.switchyard.bp.CamelServiceRoute"/>
+      </camel:implementation.camel>
+      <sca:service name="Router">
+        <sca:interface.java interface="com.objectbay.switchyard.bp.Router"/>
+      </sca:service>
+      <sca:reference name="CollectorService1">
+        <sca:interface.java interface="com.objectbay.switchyard.bp.CollectorService"/>
+      </sca:reference>
+      <sca:reference name="CollectorService2">
+        <sca:interface.java interface="com.objectbay.switchyard.bp.CollectorService"/>
+      </sca:reference>
+    </sca:component>
+    <sca:component name="CollectorService1Bean">
+      <bean:implementation.bean class="com.objectbay.switchyard.bp.CollectorService1Bean"/>
+      <sca:service name="CollectorService1">
+        <sca:interface.java interface="com.objectbay.switchyard.bp.CollectorService"/>
+      </sca:service>
+    </sca:component>
+    <sca:component name="CollectorService2Bean">
+      <bean:implementation.bean class="com.objectbay.switchyard.bp.CollectorService2Bean"/>
+      <sca:service name="CollectorService2">
+        <sca:interface.java interface="com.objectbay.switchyard.bp.CollectorService"/>
+      </sca:service>
+      <sca:reference name="GasStationService">
+        <sca:interface.java interface="com.objectbay.switchyard.bp.db.dao.GasStationService"/>
+      </sca:reference>
+    </sca:component>
+    <sca:reference name="GasStationService" multiplicity="0..1" promote="CollectorService2Bean/GasStationService">
+      <sca:interface.java interface="com.objectbay.switchyard.bp.db.dao.GasStationService"/>
+      <jpa:binding.jpa>
+        <jpa:contextMapper/>
+        <jpa:entityClassName>com.objectbay.switchyard.bp.db.domain.GasStation</jpa:entityClassName>
+        <jpa:persistenceUnit>jpaPersistenceUnit2</jpa:persistenceUnit>
+        <!-- <jpa:transactionManager>#jtaTransactionManager</jpa:transactionManager> -->
+        <jpa:transactionManager>#springPlatformTransactionManager</jpa:transactionManager>
+        <jpa:consume>
+          <jpa:consumer.namedQuery>GasStation</jpa:consumer.namedQuery>
+        </jpa:consume>
+      </jpa:binding.jpa>
+    </sca:reference>
+    <sca:service name="WebServicePortType" promote="WebServiceBean/WebService">
+      <sca:interface.wsdl interface="WebService.wsdl#wsdl.porttype(WebServicePortType)"/>
+      <soap:binding.soap>
+        <soap:contextMapper/>
+        <soap:wsdl>WebService.wsdl</soap:wsdl>
+        <soap:wsdlPort>WebServicePort</soap:wsdlPort>
+        <soap:contextPath>switchyard-bp</soap:contextPath>
+      </soap:binding.soap>
+    </sca:service>
+  </sca:composite>
+</switchyard>
