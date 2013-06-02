@@ -4,29 +4,29 @@ import java.io.Serializable;
 
 public class GasStation implements Serializable {
 	private static final long serialVersionUID = -6261224052310885993L;
-	private long id;
-	private String name;
+	private long _id;
+	private String _name;
 	
 	public GasStation() {}
 
 	public GasStation(long id, String name) {
-		this.id = id;
-		this.name = name;
+		this._id = id;
+		this._name = name;
 	}
 
 	public long getId() {
-		return id;
+		return _id;
 	}
 
 	public void setId(long id) {
-		this.id = id;
+		this._id = id;
 	}
 
 	public String getName() {
-		return name;
+		return _name;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this._name = name;
 	}
 }

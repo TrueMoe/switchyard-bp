@@ -1,7 +1,7 @@
 package com.objectbay.switchyard.bp.domain;
 
 public class ReportRequest {
-	RequestType stationType;
+	RequestType _stationType;
 	
 	public ReportRequest() { }
 	
@@ -10,10 +10,10 @@ public class ReportRequest {
 	}
 
 	public void setStationType(RequestType type) {
-		this.stationType = type;
+		this._stationType = type;
 	}
 
 	public RequestType getStationType() {
-		return stationType;
+		return _stationType;
 	}
 }

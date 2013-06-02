@@ -26,7 +26,7 @@ public class WebServiceMockTest {
 	public void testGetStationReport() throws Exception {
 		WebServiceBean bean = new WebServiceBean();
 		// set mock object
-		bean.router = router;
+		bean._router = router;
 
 		ReportResponse result = bean.getStationReport(request);
 		

@@ -6,30 +6,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReportResponse {
-	private RequestType stationType;
-	private List<GasStation> gasStations;
+	private RequestType _stationType;
+	private List<GasStation> _gasStations;
 	
 	public ReportResponse() {
-		gasStations = new ArrayList<GasStation>();
+		_gasStations = new ArrayList<GasStation>();
 	}
 
 	public ReportResponse(RequestType stationType) {
-		this.stationType = stationType;
+		this._stationType = stationType;
 	}
 
 	public RequestType getStationType() {
-		return stationType;
+		return _stationType;
 	}
 
 	public void setStationType(RequestType stationType) {
-		this.stationType = stationType;
+		this._stationType = stationType;
 	}
 
 	public List<GasStation> getGasStations() {
-		return gasStations;
+		return _gasStations;
 	}
 
 	public void setGasStations(List<GasStation> gasStations) {
-		this.gasStations = gasStations;
+		this._gasStations = gasStations;
 	}
 }

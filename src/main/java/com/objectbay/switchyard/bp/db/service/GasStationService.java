@@ -1,7 +1,7 @@
 package com.objectbay.switchyard.bp.db.service;
 
-import java.util.List;
+import com.objectbay.switchyard.bp.db.domain.GasStation;
 
 public interface GasStationService {
-	List<Object> getStations();
+	GasStation[] getStations();
 }

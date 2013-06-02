@@ -12,11 +12,11 @@ import com.objectbay.switchyard.bp.domain.ReportResponse;
 public class WebServiceBean implements WebService {
 	@Inject
 	@Reference
-	Router router;
+	Router _router;
 
 	@Override
 	public ReportResponse getStationReport(ReportRequest request) {
-		return router.getStationReport(request);
+		return _router.getStationReport(request);
 	}
 
 }

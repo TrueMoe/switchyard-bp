@@ -11,18 +11,18 @@ import com.objectbay.switchyard.bp.domain.ReportResponse;
 
 @Service(value = CollectorService.class, name = "CollectorService1")
 public class CollectorService1Bean implements CollectorService {
-	private static final List<GasStation> stations = new ArrayList<GasStation>();
+	private static final List<GasStation> STATIONS = new ArrayList<GasStation>();
 	static {
-		stations.add(new GasStation(1, "Unterweitersdorf"));
-		stations.add(new GasStation(2, "Hochfellen"));
-		stations.add(new GasStation(3, "Linz"));
-		stations.add(new GasStation(4, "Innsbruck"));
+		STATIONS.add(new GasStation(1, "Unterweitersdorf"));
+		STATIONS.add(new GasStation(2, "Hochfellen"));
+		STATIONS.add(new GasStation(3, "Linz"));
+		STATIONS.add(new GasStation(4, "Innsbruck"));
 	}
 
 	@Override
 	public ReportResponse getStationReport(ReportRequest request) {
 		ReportResponse response = new ReportResponse(request.getStationType());
-		response.setGasStations(stations);
+		response.setGasStations(STATIONS);
 		return response;
 	}
 
